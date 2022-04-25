@@ -87,4 +87,4 @@ Use Geo to get the LAT and LON?
 
 */
 
-
+// fetchButton.addEventListener('click', getApi);
