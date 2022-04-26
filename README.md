@@ -68,3 +68,13 @@ Example of API Call
 
 GeoCoding API 
 - https://openweathermap.org/api/geocoding-api
+
+Convert UNIX UTC 
+- https://coderrocketfuel.com/article/convert-a-unix-timestamp-to-a-date-in-vanilla-javascript
+
+
+One Call How to make an API call
+ - https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+
+Geocoding API Call
+ - http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}

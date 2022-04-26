@@ -24,8 +24,11 @@ var citySearched = document.getElementById('citySearched');
 var today = document.getElementById('today')
 var weateherIcon = document.getElementById('weatherIcon')
 var temp = document.getElementById('temp')
-var humid = document.getElementById('windSpeed')
+var humid = document.getElementById('humid')
+var wind = document.getElementById('windSpeed')
 var uvIndex = document.getElementById('uvIndex')
+var description = document.getElementById('description')
+
 
 
 // Objects to target 
@@ -40,21 +43,6 @@ var uvIndex = document.getElementById('uvIndex')
 //  - 8 - 11+, Severe       Red
 
 
-// Open Weather API Call Info
-// API Call 
-// - http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={API key}
-
-// Example of API Call
-// - api.openweathermap.org/data/2.5/forecast?id=524901&appid={API key}
-
-// One Call How to make an API call
-// https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-
-
-// Geocoding API Call
-//  - http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-
-
 // Function to get cityName's Lat and Lon
 function getLatLon () {
     
@@ -67,10 +55,14 @@ function getLatLon () {
         console.log(data);
         // Get and Set - Lat Lon
         lat =  data[0].lat
+            console.log(lat)
         lon = data[0].lon
-        console.log(lat)
-        console.log(lon)
+            console.log(lon)
+        
+        // Call Function with Lat and Lon
         getWeather(lat, lon)
+
+        // Display City on Page
         citySearched.textContent = cityName
     })
 
@@ -79,8 +71,6 @@ function getLatLon () {
 // API Call, Fetch
 function getWeather (lats,lons) {
 fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`) 
-// + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`
-// `?lat=${lat}&lon=${lon}&appid=${apiKey}`
     .then (function (response) {
         return response.json();
     })
@@ -109,15 +99,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var uvScore = data.current.uvi;
             console.log('uvi', uvScore)
 
-// current.dt
-// current.humidity
-// current.temp
-// current.weather[0].description
-// current.wind_speed
-// current.uvi - UX Index
-//  - 0 to 2, Favorable     Green
-//  - 3 to 7, Moderate      Yellow
-//  - 8 - 11+, Severe       Red
+        displayResults(dateScore, tempScore, humidScore, windScore, uvScore, descripScore)
 
     })
 }
@@ -126,7 +108,24 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 getLatLon();
 
 // Display API Results
-function displayResults () {
+function displayResults (dateScore, tempScore, humidScore, windScore, uvScore, descripScore) {
+    // Display Date
+    today.textContent = dateScore;
+
+    // Display Temp
+    temp.textContent = tempScore;
+
+    // Display Humidity
+    humid.textContent = humidScore;
+
+    // Display Wind Score
+    wind.textContent = windScore;
+
+    // Display UV Score
+    uvIndex.textContent = uvScore;
+
+    // Display Description:
+    description.textContent = descripScore;
 
 }
 
