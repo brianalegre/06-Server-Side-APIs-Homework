@@ -11,7 +11,7 @@ var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
 
 
 // Geo Variables
-var cityName = "Baldwin Park"
+var cityName = "japan"
 var stateCode;
 var countryCode;
 var limit;
@@ -19,13 +19,25 @@ var geoCall = `http://api.openweathermap.org/geo/1.0/direct`
 // ?q=${cityName},${stateCode},${countryCode}&limit=${limit}&appid=${apiKey}
 
 
+// HTML Targeting Variables
+var citySearched = document.getElementById('citySearched');
+var today = document.getElementById('today')
+var weateherIcon = document.getElementById('weatherIcon')
+var temp = document.getElementById('temp')
+var humid = document.getElementById('windSpeed')
+var uvIndex = document.getElementById('uvIndex')
+
 
 // Objects to target 
-// current.uvi - UX Index
+// current.dt
 // current.humidity
 // current.temp
 // current.weather[0].description
 // current.wind_speed
+// current.uvi - UX Index
+//  - 0 to 2, Favorable     Green
+//  - 3 to 7, Moderate      Yellow
+//  - 8 - 11+, Severe       Red
 
 
 // Open Weather API Call Info
@@ -59,6 +71,7 @@ function getLatLon () {
         console.log(lat)
         console.log(lon)
         getWeather(lat, lon)
+        citySearched.textContent = cityName
     })
 
 }   
@@ -73,11 +86,50 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
     })
     .then (function (data) {
         console.log(data);
+        // Date
+        var dateUTCScore = data.current.dt;
+            // convert UNIX, UTC to a Date
+            var dateUTCScoreMili = dateUTCScore * 1000;
+            var dateObject = new Date(dateUTCScoreMili)
+            var dateScore = dateObject.toLocaleDateString();
+            console.log('dateScore', dateScore)
+        // Humid
+        var humidScore = data.current.humidity
+            console.log("Humid", humidScore)
+        // Temp
+        var tempScore = data.current.temp
+            console.log('tempScore', tempScore)
+        // Weather Description
+        var descripScore = data.current.weather[0].description;
+            console.log('Weather Description', descripScore);
+        // Wind Speed
+        var windScore = data.current.wind_speed;
+            console.log('windscore', windScore)
+        // UV Index
+        var uvScore = data.current.uvi;
+            console.log('uvi', uvScore)
+
+// current.dt
+// current.humidity
+// current.temp
+// current.weather[0].description
+// current.wind_speed
+// current.uvi - UX Index
+//  - 0 to 2, Favorable     Green
+//  - 3 to 7, Moderate      Yellow
+//  - 8 - 11+, Severe       Red
+
     })
 }
 
 // call function
 getLatLon();
+
+// Display API Results
+function displayResults () {
+
+}
+
 
 
 // Food for thought
