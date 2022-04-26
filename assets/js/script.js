@@ -28,6 +28,7 @@ var humid = document.getElementById('humid')
 var wind = document.getElementById('windSpeed')
 var uvIndex = document.getElementById('uvIndex')
 var description = document.getElementById('description')
+var search = document.getElementById('searchButton')
 
 
 
@@ -63,7 +64,7 @@ function getLatLon () {
         getWeather(lat, lon)
 
         // Display City on Page
-        citySearched.textContent = cityName
+        citySearched.textContent = cityName.toUpperCase()
     })
 
 }   
@@ -149,7 +150,27 @@ function displayResults (dateScore, tempScore, humidScore, windScore, uvScore, d
 
 }
 
+// Function for searching city
+function searchPlace(event) {
+    event.preventDefault();
 
+    // Get Input Value
+    var searchInputVal = document.getElementById('searchInput').value.trim();
+    
+    // Check for an input
+    if (!searchInputVal) {
+        console.log("sarchInputVal", searchInputVal)
+        return;
+    }
+
+    var queryString = './weather-results.html?q=' + searchInputVal;
+
+    // Go to next page
+    location.assign(queryString)
+}
+
+// Listen for Click on Search
+searchButton.addEventListener('click', searchPlace)
 
 // Food for thought
 /* 
