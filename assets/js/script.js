@@ -11,7 +11,7 @@ var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
 
 
 // Geo Variables
-var cityName = "japan"
+var cityName = "tokyo"
 var stateCode;
 var countryCode;
 var limit;
@@ -78,11 +78,31 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         console.log(data);
         // Date
         var dateUTCScore = data.current.dt;
+        var timeZoneOffsetScore = data.timezone_offset;
             // convert UNIX, UTC to a Date
-            var dateUTCScoreMili = dateUTCScore * 1000;
+            var dateUTCScoreMili = dateUTCScore * 1000
+            var timeZoneScoreMili = timeZoneOffsetScore * 1000
+
+            var dateScore2 = dateUTCScoreMili + timeZoneScoreMili
+
             var dateObject = new Date(dateUTCScoreMili)
+            var dateObject2 = new Date(dateScore2)
+
             var dateScore = dateObject.toLocaleDateString();
+            var dateScore2 = dateObject2.toLocaleDateString("en-US", {timeZoneName: "short"})
+
+            // Display the Date, no Timezone Offset
             console.log('dateScore', dateScore)
+            // Display the Date, WITH Timezone Offset
+            console.log('dateScore2', dateScore2)
+            console.log('timeZoneOffset', timeZoneOffsetScore)
+
+            // ISSUE
+            // Tokyo - Displays the correct date with dateUTCScore + timeZoneOffsetScore
+            // New York - Does NOT display the correct date with dateUTCScore + timeZoneOffsetScore
+            
+
+            
         // Humid
         var humidScore = data.current.humidity
             console.log("Humid", humidScore)
