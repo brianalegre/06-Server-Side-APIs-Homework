@@ -1,7 +1,7 @@
 // Variables
 var apiKey =  "b285d18d11dcc358521846452d848e59";
 var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
-var geoCall = `http://api.openweathermap.org/geo/1.0/direct`
+var geoCall = `https://api.openweathermap.org/geo/1.0/direct`
 
 
 // HTML Targeting Variables
@@ -23,7 +23,7 @@ var queryParam = cityParam.split('=').pop();
     console.log('cityParam', cityParam)
     console.log('queryParam', queryParam)
     // decodeURI opposite of encodeURI
-    console.log('encodueURI', decodeURI(queryParam))
+    console.log('decodueURI', decodeURI(queryParam))
 
 // Display Function on Load
 getLatLon(decodeURI(queryParam))

@@ -15,7 +15,7 @@ var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
 var stateCode;
 var countryCode;
 var limit;
-var geoCall = `http://api.openweathermap.org/geo/1.0/direct`
+var geoCall = `https://api.openweathermap.org/geo/1.0/direct`
 // ?q=${cityName},${stateCode},${countryCode}&limit=${limit}&appid=${apiKey}
 
 
