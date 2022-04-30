@@ -11,7 +11,7 @@ var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
 
 
 // Geo Variables
-var cityName = "tokyo"
+// var cityName = "los angeles"
 var stateCode;
 var countryCode;
 var limit;
@@ -45,10 +45,10 @@ var search = document.getElementById('searchButton')
 
 
 // Function to get cityName's Lat and Lon
-function getLatLon () {
+function getLatLon (cityName) {
     
     // GEO Call, Fetch
-    fetch(geoCall + `?q=${cityName}&appid=${apiKey}`) 
+    fetch(geoCall + `?q=${encodeURI(cityName)}&appid=${apiKey}`) 
     .then (function (response) {
     return response.json();
     })
@@ -72,31 +72,39 @@ function getLatLon () {
 // API Call, Fetch
 function getWeather (lats,lons) {
 fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`) 
-    .then (function (response) {
-        return response.json();
-    })
-    .then (function (data) {
-        console.log(data);
-        // Date
-        var dateUTCScore = data.current.dt;
-        var timeZoneOffsetScore = data.timezone_offset;
-            // convert UNIX, UTC to a Date
-            var dateUTCScoreMili = dateUTCScore * 1000
-            var timeZoneScoreMili = timeZoneOffsetScore * 1000
+.then (function (response) {
+    return response.json();
+})
+.then (function (data) {
+    console.log(data);
+    // Date
+    var dateUTCScore = data.current.dt;
+    var timeZoneOffsetScore = data.timezone_offset;
+    console.log('timeZoneOffsetScore', timeZoneOffsetScore);
 
-            var dateScore2 = dateUTCScoreMili + timeZoneScoreMili
+    // From Chad
+    // var hourOffset = timeZoneOffsetScore/3600;
+    // Date.now() + hourOffset * 3600 * 1000
 
-            var dateObject = new Date(dateUTCScoreMili)
-            var dateObject2 = new Date(dateScore2)
+        // convert UNIX, UTC to a Date
+        var dateUTCScoreMili = dateUTCScore * 1000
+        var timeZoneScoreMili = timeZoneOffsetScore * 1000
 
-            var dateScore = dateObject.toLocaleDateString();
-            var dateScore2 = dateObject2.toLocaleDateString("en-US", {timeZoneName: "short"})
+        var dateScore2 = dateUTCScoreMili + timeZoneScoreMili
 
-            // Display the Date, no Timezone Offset
-            console.log('dateScore', dateScore)
-            // Display the Date, WITH Timezone Offset
-            console.log('dateScore2', dateScore2)
-            console.log('timeZoneOffset', timeZoneOffsetScore)
+        var dateObject = new Date(dateUTCScoreMili)
+        var dateObject2 = new Date(dateScore2)
+        
+        var dateScore = dateObject.toLocaleDateString();  
+
+
+        var dateScore2 = dateObject2.toLocaleDateString("en-US", {timeZoneName: "short"})
+
+        // Display the Date, no Timezone Offset
+        console.log('dateScore', dateScore)
+        // Display the Date, WITH Timezone Offset
+        console.log('dateScore2', dateScore2)
+        console.log('timeZoneOffset', timeZoneOffsetScore)
 
             // ISSUE
             // Tokyo - Displays the correct date with dateUTCScore + timeZoneOffsetScore
@@ -126,7 +134,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 }
 
 // call function
-getLatLon();
+getLatLon("London");
 
 // Display API Results
 function displayResults (dateScore, tempScore, humidScore, windScore, uvScore, descripScore) {
@@ -162,6 +170,9 @@ function searchPlace(event) {
         console.log("sarchInputVal", searchInputVal)
         return;
     }
+
+    // Display Search Results on Main
+    // getLatLon(searchInputVal)
 
     var queryString = './weather-results.html?q=' + searchInputVal;
 
