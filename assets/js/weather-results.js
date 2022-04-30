@@ -102,6 +102,9 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         // Temp
         var tempScore = data.current.temp
             console.log('tempScore', tempScore)
+                // Convert Temp from K to F
+                imperialScore = ((tempScore-273.15)*1.8)+32
+                console.log('imperialScore:', imperialScore)
         // Weather Description
         var descripScore = data.current.weather[0].description;
             console.log('Weather Description', descripScore);
@@ -112,19 +115,19 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var uvScore = data.current.uvi;
             console.log('uvi', uvScore)
 
-        displayResults(dateScore, tempScore, humidScore, windScore, uvScore, descripScore)
+        displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, descripScore)
 
     })
 }
 
 
 // Display API Results
-function displayResults (dateScore, tempScore, humidScore, windScore, uvScore, descripScore) {
+function displayResults (dateScore, imperialScore, humidScore, windScore, uvScore, descripScore) {
     // Display Date
     today.textContent = dateScore;
 
     // Display Temp
-    temp.textContent = tempScore;
+    temp.textContent = Math.ceil(imperialScore) + ` °F`;
 
     // Display Humidity
     humid.textContent = humidScore;
