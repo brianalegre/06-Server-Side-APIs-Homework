@@ -117,6 +117,34 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 
         displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, descripScore)
 
+        // Get 5 day forecast
+        // Loop thru the data
+        for (var i = 1; i < 6; i++) {
+            // Date
+            var fiveDateUTCScore = data.daily[i].dt;
+                console.log('5dateScore', fiveDateUTCScore);
+                // convert UNIX, UTC to a Date
+                var fiveDateUTCScoreMili = fiveDateUTCScore * 1000
+                var dateScore3 = fiveDateUTCScoreMili + timeZoneScoreMili
+                var dateObject3 = new Date(dateScore3)
+                var fiveDateScore = dateObject3.toLocaleDateString();  
+                    console.log('5dateScore Converted', fiveDateScore)
+
+            // Weather Icon
+            var fiveWeatherScore = data.daily[i].weather[0].description
+                console.log('5weatherScore', fiveWeatherScore);
+            // Temp
+            var fiveTempScore = data.daily[i].temp;
+                console.log('5tempScore', fiveHumidScore);
+            // Humid
+            var fiveHumidScore = data.daily[i].humidity;
+                console.log('5humidScore', fiveHumidScore);
+            // Wind
+            var fiveWindScore = data.daily[i].wind_speed;
+                console.log('5windScore', fiveWindScore);
+
+        }
+
     })
 }
 

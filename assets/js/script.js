@@ -133,6 +133,8 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 
         displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, descripScore)
 
+
+
     })
 }
 
@@ -170,7 +172,7 @@ function searchPlace(event) {
     
     // Check for an input
     if (!searchInputVal) {
-        console.log("sarchInputVal", searchInputVal)
+        console.log("searchInputVal", searchInputVal)
         return;
     }
 
