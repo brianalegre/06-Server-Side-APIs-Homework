@@ -14,14 +14,18 @@ var wind = document.getElementById('windSpeed')
 var uvIndex = document.getElementById('uvIndex')
 var description = document.getElementById('description')
 var search = document.getElementById('searchButton')
+// var fiveDate = document.getElementById('fiveDate')
+// var fiveIcon = document.getElementById('fiveIcon')
+var fiveTemp = document.getElementById('fiveTemp')
+// var 
 
 
 // Get City from URL
 var cityParam = document.location.search 
 var queryParam = cityParam.split('=').pop();
     // Check Results in Dev Tools
-    console.log('cityParam', cityParam)
-    console.log('queryParam', queryParam)
+    // console.log('cityParam', cityParam)
+    // console.log('queryParam', queryParam)
     // decodeURI opposite of encodeURI
     console.log('decodueURI', decodeURI(queryParam))
 
@@ -37,7 +41,7 @@ function getLatLon (cityName) {
     return response.json();
     })
     .then (function (data) {
-        console.log(data);
+        // console.log(data);
         // Get and Set - Lat Lon
         lat =  data[0].lat
             console.log(lat)
@@ -64,7 +68,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
     // Date
     var dateUTCScore = data.current.dt;
     var timeZoneOffsetScore = data.timezone_offset;
-    console.log('timeZoneOffsetScore', timeZoneOffsetScore);
+    // console.log('timeZoneOffsetScore', timeZoneOffsetScore);
 
     // From Chad
     // var hourOffset = timeZoneOffsetScore/3600;
@@ -85,10 +89,10 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var dateScore2 = dateObject2.toLocaleDateString("en-US", {timeZoneName: "short"})
 
         // Display the Date, no Timezone Offset
-        console.log('dateScore', dateScore)
+        // console.log('dateScore', dateScore)
         // Display the Date, WITH Timezone Offset
-        console.log('dateScore2', dateScore2)
-        console.log('timeZoneOffset', timeZoneOffsetScore)
+        // console.log('dateScore2', dateScore2)
+        // console.log('timeZoneOffset', timeZoneOffsetScore)
 
             // ISSUE
             // Tokyo - Displays the correct date with dateUTCScore + timeZoneOffsetScore
@@ -98,22 +102,22 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
             
         // Humid
         var humidScore = data.current.humidity
-            console.log("Humid", humidScore)
+            // console.log("Humid", humidScore)
         // Temp
         var tempScore = data.current.temp
-            console.log('tempScore', tempScore)
+            // console.log('tempScore', tempScore)
                 // Convert Temp from K to F
                 imperialScore = ((tempScore-273.15)*1.8)+32
-                console.log('imperialScore:', imperialScore)
+                // console.log('imperialScore:', imperialScore)
         // Weather Description
         var descripScore = data.current.weather[0].description;
-            console.log('Weather Description', descripScore);
+            // console.log('Weather Description', descripScore);
         // Wind Speed
         var windScore = data.current.wind_speed;
-            console.log('windscore', windScore)
+            // console.log('windscore', windScore)
         // UV Index
         var uvScore = data.current.uvi;
-            console.log('uvi', uvScore)
+            // console.log('uvi', uvScore)
 
         displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, descripScore)
 
@@ -122,26 +126,30 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         for (var i = 1; i < 6; i++) {
             // Date
             var fiveDateUTCScore = data.daily[i].dt;
-                console.log('5dateScore', fiveDateUTCScore);
+                // console.log('5dateScore', fiveDateUTCScore);
                 // convert UNIX, UTC to a Date
                 var fiveDateUTCScoreMili = fiveDateUTCScore * 1000
                 var dateScore3 = fiveDateUTCScoreMili + timeZoneScoreMili
                 var dateObject3 = new Date(dateScore3)
                 var fiveDateScore = dateObject3.toLocaleDateString();  
-                    console.log('5dateScore Converted', fiveDateScore)
+                    // console.log('5dateScore Converted', fiveDateScore)
 
             // Weather Icon
             var fiveWeatherScore = data.daily[i].weather[0].description
-                console.log('5weatherScore', fiveWeatherScore);
+                // console.log('5weatherScore', fiveWeatherScore);
             // Temp
-            var fiveTempScore = data.daily[i].temp;
-                console.log('5tempScore', fiveHumidScore);
+            var fiveTempScore = data.daily[i].temp.day
+                console.log('fiveTempScore', fiveTempScore)
+                // Convert Temp from K to F
+                var fiveImperialScore = ((fiveTempScore-273.15)*1.8)+32
             // Humid
             var fiveHumidScore = data.daily[i].humidity;
-                console.log('5humidScore', fiveHumidScore);
+                // console.log('5humidScore', fiveHumidScore);
             // Wind
             var fiveWindScore = data.daily[i].wind_speed;
-                console.log('5windScore', fiveWindScore);
+                // console.log('5windScore', fiveWindScore);
+
+            displayFiveResults(fiveDateScore, fiveWeatherScore, fiveImperialScore, fiveHumidScore, fiveWindScore)
 
         }
 
@@ -153,6 +161,8 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 function displayResults (dateScore, imperialScore, humidScore, windScore, uvScore, descripScore) {
     // Display Date
     today.textContent = dateScore;
+
+    // Weather Icon
 
     // Display Temp
     temp.textContent = Math.ceil(imperialScore) + ` °F`;
@@ -168,5 +178,23 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
 
     // Display Description:
     description.textContent = descripScore;
+
+}
+
+// Display 5 Day Forecast
+function displayFiveResults(fiveDateScore, fiveWeatherScore, fiveImperialScore, fiveHumidScore, fiveWindScore) {
+    // Create Each Day's Weather Info
+    $(".fiveDay").append(
+        $(`
+        <div class=eachDay>
+            <p> <b>Date: ${fiveDateScore}</b></p>
+            <p>Weather Icon: ${fiveWeatherScore}</p>
+            <p>Temperature: ${Math.ceil(fiveImperialScore)} °F</p>
+            <p>Humidity: ${fiveHumidScore}</p>
+            <p>Wind Speed: ${fiveWindScore}</p>
+        </div>
+        `)
+
+    );
 
 }
