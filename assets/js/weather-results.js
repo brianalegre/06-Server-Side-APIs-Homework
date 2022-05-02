@@ -14,19 +14,12 @@ var wind = document.getElementById('windSpeed')
 var uvIndex = document.getElementById('uvIndex')
 var description = document.getElementById('description')
 var search = document.getElementById('searchButton')
-// var fiveDate = document.getElementById('fiveDate')
-// var fiveIcon = document.getElementById('fiveIcon')
-var fiveTemp = document.getElementById('fiveTemp')
-// var 
 
 
 // Get City from URL
 var cityParam = document.location.search 
 var queryParam = cityParam.split('=').pop();
     // Check Results in Dev Tools
-    // console.log('cityParam', cityParam)
-    // console.log('queryParam', queryParam)
-    // decodeURI opposite of encodeURI
     console.log('decodueURI', decodeURI(queryParam))
 
 // Display Function on Load
@@ -34,7 +27,6 @@ getLatLon(decodeURI(queryParam))
 
 // Function to get cityName's Lat and Lon
 function getLatLon (cityName) {
-    
     // GEO Call, Fetch
     fetch(geoCall + `?q=${encodeURI(cityName)}&appid=${apiKey}`) 
     .then (function (response) {
@@ -57,7 +49,7 @@ function getLatLon (cityName) {
 
 }   
 
-// API Call, Fetch
+// Function get Weather by Latitude and Longitude
 function getWeather (lats,lons) {
 fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`) 
 .then (function (response) {
@@ -139,7 +131,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
                 // console.log('5weatherScore', fiveWeatherScore);
             // Temp
             var fiveTempScore = data.daily[i].temp.day
-                console.log('fiveTempScore', fiveTempScore)
+                // console.log('fiveTempScore', fiveTempScore)
                 // Convert Temp from K to F
                 var fiveImperialScore = ((fiveTempScore-273.15)*1.8)+32
             // Humid
@@ -186,7 +178,7 @@ function displayFiveResults(fiveDateScore, fiveWeatherScore, fiveImperialScore, 
     // Create Each Day's Weather Info
     $(".fiveDay").append(
         $(`
-        <div class=eachDay>
+        <div class="eachDay">
             <p> <b>Date: ${fiveDateScore}</b></p>
             <p>Weather Icon: ${fiveWeatherScore}</p>
             <p>Temperature: ${Math.ceil(fiveImperialScore)} °F</p>
