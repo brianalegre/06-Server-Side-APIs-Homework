@@ -164,8 +164,7 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
 }
 
 // Function for searching city
-function searchPlace(event) {
-    event.preventDefault();
+function searchPlace() {
 
     // Get Input Value
     var searchInputVal = document.getElementById('searchInput').value.trim();
@@ -186,7 +185,18 @@ function searchPlace(event) {
 }
 
 // Listen for Click on Search
-searchButton.addEventListener('click', searchPlace)
+// searchButton.addEventListener('click', searchPlace)
+
+var searchKey = document.getElementById('searchInput')
+
+searchKey.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        console.log("Enter was pressed")
+        event.preventDefault();
+        searchPlace();
+    }
+})
+
 
 // Food for thought
 /* 
