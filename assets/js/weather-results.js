@@ -190,3 +190,17 @@ function displayFiveResults(fiveDateScore, fiveWeatherScore, fiveImperialScore, 
     );
 
 }
+
+function displayHistory() {
+    var history = localStorage.getItem("cityName")
+    console.log('history', history)
+
+    // Display on Page
+    $(".history").append(
+        $(`
+            <p>${history} </p>
+        `)
+    )
+}
+
+displayHistory()

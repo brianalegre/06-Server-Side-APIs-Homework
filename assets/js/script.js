@@ -175,6 +175,8 @@ function searchPlace() {
     var historyInput = searchInputVal
     localStorage.setItem('cityName', historyInput)
     
+
+    
     // Check for an input
     if (!searchInputVal) {
         console.log("searchInputVal", searchInputVal)
