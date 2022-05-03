@@ -28,7 +28,9 @@ var humid = document.getElementById('humid')
 var wind = document.getElementById('windSpeed')
 var uvIndex = document.getElementById('uvIndex')
 var description = document.getElementById('description')
-var search = document.getElementById('searchButton')
+// var search = document.getElementById('searchButton')
+var searchKey = document.getElementById('searchInput')
+
 
 
 
@@ -168,6 +170,10 @@ function searchPlace() {
 
     // Get Input Value
     var searchInputVal = document.getElementById('searchInput').value.trim();
+
+    // Store Input Value to History
+    var historyInput = searchInputVal
+    localStorage.setItem('cityName', historyInput)
     
     // Check for an input
     if (!searchInputVal) {
@@ -187,8 +193,7 @@ function searchPlace() {
 // Listen for Click on Search
 // searchButton.addEventListener('click', searchPlace)
 
-var searchKey = document.getElementById('searchInput')
-
+// Listen for Enter Key to searchPlace
 searchKey.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         console.log("Enter was pressed")
