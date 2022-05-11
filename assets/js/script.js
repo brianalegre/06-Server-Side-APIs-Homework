@@ -215,6 +215,20 @@ searchKey.addEventListener('keypress', function (event) {
     }
 })
 
+function displayHistory() {
+    var history = localStorage.getItem("cityName")
+    console.log('history', history)
+
+    // Display on Page
+    $(".history").append(
+        $(`
+            <p>${history} </p>
+        `)
+    )
+}
+
+displayHistory()
+
 
 // Food for thought
 /* 
