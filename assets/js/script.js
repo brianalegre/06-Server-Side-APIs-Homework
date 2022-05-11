@@ -216,15 +216,24 @@ searchKey.addEventListener('keypress', function (event) {
 })
 
 function displayHistory() {
-    var history = localStorage.getItem("cityName")
-    console.log('history', history)
+    // var old_data = JSON.parse(localStorage.getItem('cityName'))
+
+    var history = JSON.parse(localStorage.getItem('cityName'))
+    // console.log('history', history)
 
     // Display on Page
-    $(".history").append(
-        $(`
-            <p>${history} </p>
-        `)
-    )
+    // JQuery Dynamic HTML Creation
+    if (history) {
+        for (var i = 0; i < history.length; i++) {
+            $(".history").append(
+                $(/*html*/`
+                    <button class="historybtn">${history[i]} </button> <br>
+                `)
+            )
+        }
+    } else {
+        console.log('No History')
+    }
 }
 
 displayHistory()
