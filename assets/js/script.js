@@ -171,12 +171,23 @@ function searchPlace() {
     // Get Input Value
     var searchInputVal = document.getElementById('searchInput').value.trim();
 
-    // Store Input Value to History
-    var historyInput = searchInputVal
-    localStorage.setItem('cityName', historyInput)
-    
+    // Store Input Value to localStorage
+    // Check if keyValue Pair is empty
+    if (localStorage.getItem('cityName') === null) {
+        localStorage.setItem('cityName', '[]')
+    }
 
+    // Get Previous Data on localStorage
+    var old_data = JSON.parse(localStorage.getItem('cityName'))
     
+    // Check for duplicate value
+    if (old_data.indexOf(searchInputVal) === -1) {
+        old_data.push(searchInputVal)
+
+        // Save old and new data
+        localStorage.setItem('cityName', JSON.stringify(old_data))
+    }
+
     // Check for an input
     if (!searchInputVal) {
         console.log("searchInputVal", searchInputVal)
