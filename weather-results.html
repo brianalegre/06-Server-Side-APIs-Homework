@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/8bit-wonder" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script defer src="./assets/js/weather-results.js"></script>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/8bit-wonder');
+    </style>
     <title>Weather | Search Results</title>
 </head>
 <body>
@@ -14,16 +18,17 @@
         <div>
             <h1><span id="citySearched"></span> </h1>
             <p> Date: <span id="today"></span></p>
-            <p> Weather description: <span id="description"></span></p>
-            <p> Weather Icon: <span id="weatherIcon"></span></p>
+            <!-- <p> Weather description: <span id="description"></span></p> -->
+            <img id="weatherIcon" src="" alt="Weather Icon">
             <p> Temperature: <span id="temp"></span></p>
             <p> Humidity: <span id="humid"></span></p>
             <p> Wind Speed: <span id="windSpeed"></span></p>
             <p> UV Index: <span id="uvIndex"></span></p>
         </div>
     </main>
+    <!-- <h2>Five Day Forecast: </h2> -->
     <div class="fiveDay">
-        <h2>Five Day Forecast: </h2>
+        
     </div>
 
 </body>

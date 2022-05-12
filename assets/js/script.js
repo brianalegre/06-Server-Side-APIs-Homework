@@ -123,9 +123,9 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
                 // Convert Temp from K to F
                 imperialScore = ((tempScore-273.15)*1.8)+32
                     console.log('imperialScore:', imperialScore)
-        // Weather Description
-        var descripScore = data.current.weather[0].description;
-            console.log('Weather Description', descripScore);
+        // Weather Icon
+        var weatherScore = data.current.weather[0].icon;
+        var iconScore = `http://openweathermap.org/img/wn/${weatherScore}@2x.png`
         // Wind Speed
         var windScore = data.current.wind_speed;
             console.log('windscore', windScore)
@@ -133,7 +133,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var uvScore = data.current.uvi;
             console.log('uvi', uvScore)
 
-        displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, descripScore)
+        displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, iconScore)
 
 
 
@@ -144,7 +144,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 getLatLon("tokyo");
 
 // Display API Results
-function displayResults (dateScore, imperialScore, humidScore, windScore, uvScore, descripScore) {
+function displayResults (dateScore, imperialScore, humidScore, windScore, uvScore, iconScore) {
     // Display Date
     today.textContent = dateScore;
 
@@ -160,8 +160,8 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
     // Display UV Score
     uvIndex.textContent = uvScore;
 
-    // Display Description:
-    description.textContent = descripScore;
+    // Weather Icon
+    weateherIcon.src = iconScore;
 
 }
 

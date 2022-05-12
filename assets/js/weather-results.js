@@ -16,6 +16,7 @@ var description = document.getElementById('description')
 var search = document.getElementById('searchButton')
 
 
+
 // Get City from URL
 var cityParam = document.location.search 
 var queryParam = cityParam.split('=').pop();
@@ -102,7 +103,8 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
                 imperialScore = ((tempScore-273.15)*1.8)+32
                 // console.log('imperialScore:', imperialScore)
         // Weather Description
-        var descripScore = data.current.weather[0].description;
+        var weatherScore = data.current.weather[0].icon;
+        var iconScore = `http://openweathermap.org/img/wn/${weatherScore}@2x.png`
             // console.log('Weather Description', descripScore);
         // Wind Speed
         var windScore = data.current.wind_speed;
@@ -111,7 +113,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var uvScore = data.current.uvi;
             // console.log('uvi', uvScore)
 
-        displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, descripScore)
+        displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, iconScore)
 
         // Get 5 day forecast
         // Loop thru the data
@@ -127,7 +129,8 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
                     // console.log('5dateScore Converted', fiveDateScore)
 
             // Weather Icon
-            var fiveWeatherScore = data.daily[i].weather[0].description
+            var fiveWeatherScore = data.daily[i].weather[0].icon
+            var fiveIconScore = `http://openweathermap.org/img/wn/${fiveWeatherScore}@2x.png`
                 // console.log('5weatherScore', fiveWeatherScore);
             // Temp
             var fiveTempScore = data.daily[i].temp.day
@@ -141,7 +144,7 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
             var fiveWindScore = data.daily[i].wind_speed;
                 // console.log('5windScore', fiveWindScore);
 
-            displayFiveResults(fiveDateScore, fiveWeatherScore, fiveImperialScore, fiveHumidScore, fiveWindScore)
+            displayFiveResults(fiveDateScore, fiveIconScore, fiveImperialScore, fiveHumidScore, fiveWindScore)
 
         }
 
@@ -150,11 +153,12 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
 
 
 // Display API Results
-function displayResults (dateScore, imperialScore, humidScore, windScore, uvScore, descripScore) {
+function displayResults (dateScore, imperialScore, humidScore, windScore, uvScore, iconScore) {
     // Display Date
     today.textContent = dateScore;
 
     // Weather Icon
+    weateherIcon.src = iconScore;
 
     // Display Temp
     temp.textContent = Math.ceil(imperialScore) + ` °F`;
@@ -169,18 +173,18 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
     uvIndex.textContent = uvScore;
 
     // Display Description:
-    description.textContent = descripScore;
+    // description.textContent = descripScore;
 
 }
 
 // Display 5 Day Forecast
-function displayFiveResults(fiveDateScore, fiveWeatherScore, fiveImperialScore, fiveHumidScore, fiveWindScore) {
+function displayFiveResults(fiveDateScore, fiveIconScore, fiveImperialScore, fiveHumidScore, fiveWindScore) {
     // Create Each Day's Weather Info
     $(".fiveDay").append(
         $(`
         <div class="eachDay">
             <p> <b>Date: ${fiveDateScore}</b></p>
-            <p>Weather Icon: ${fiveWeatherScore}</p>
+            <img src="${fiveIconScore}" atl="Weather Icon">
             <p>Temperature: ${Math.ceil(fiveImperialScore)} °F</p>
             <p>Humidity: ${fiveHumidScore}</p>
             <p>Wind Speed: ${fiveWindScore}</p>

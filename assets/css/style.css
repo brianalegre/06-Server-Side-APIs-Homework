@@ -84,4 +84,18 @@ body {
     cursor: pointer;
 }
 
+.fiveDay {
+    display: flex;
+    position: relative;
+    margin-top: 20px;
+}
+
+.eachDay {
+    font-size: 20px;
+    margin-top: 200px;
+    flex: wrap;
+
+
+}
+
 
