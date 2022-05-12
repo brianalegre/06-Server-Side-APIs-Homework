@@ -165,12 +165,12 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
 
 }
 
+// Get Input Value
+// var searchInputVal = document.getElementById('searchInput').value.trim();
+
 // Function for searching city
-function searchPlace() {
-
-    // Get Input Value
-    var searchInputVal = document.getElementById('searchInput').value.trim();
-
+function searchPlace(city) {
+    console.log('searchPlace Function called')
     // Store Input Value to localStorage
     // Check if keyValue Pair is empty
     if (localStorage.getItem('cityName') === null) {
@@ -181,23 +181,23 @@ function searchPlace() {
     var old_data = JSON.parse(localStorage.getItem('cityName'))
     
     // Check for duplicate value
-    if (old_data.indexOf(searchInputVal) === -1) {
-        old_data.push(searchInputVal)
+    if (old_data.indexOf(city) === -1) {
+        old_data.push(city)
 
         // Save old and new data
         localStorage.setItem('cityName', JSON.stringify(old_data))
     }
 
     // Check for an input
-    if (!searchInputVal) {
-        console.log("searchInputVal", searchInputVal)
+    if (!city) {
+        console.log("searchInputVal", city)
         return;
     }
 
     // Display Search Results on Main
     // getLatLon(searchInputVal)
 
-    var queryString = './weather-results.html?q=' + searchInputVal;
+    var queryString = './weather-results.html?q=' + city;
 
     // Go to next page
     location.assign(queryString)
@@ -211,7 +211,8 @@ searchKey.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         console.log("Enter was pressed")
         event.preventDefault();
-        searchPlace();
+        var searchInputVal = document.getElementById('searchInput').value.trim();
+        searchPlace(searchInputVal);
     }
 })
 
@@ -227,7 +228,7 @@ function displayHistory() {
         for (var i = 0; i < history.length; i++) {
             $(".history").append(
                 $(/*html*/`
-                    <button class="historybtn">${history[i]} </button> <br>
+                    <button class="historybtn" data-id="${history[i]}">${history[i]} </button> <br>
                 `)
             )
         }
@@ -237,6 +238,17 @@ function displayHistory() {
 }
 
 displayHistory()
+
+// Listen for click on History Items
+historyEl = document.getElementsByClassName("historybtn")
+for (let h = 0; h < historyEl.length; h++) {
+    historyEl[h].addEventListener('click', function (event) {
+        event.preventDefault();
+        clickedValue = event.target.getAttribute("data-id")
+        console.log('i was clicked', clickedValue)
+        searchPlace(clickedValue)
+    })
+}
 
 
 // Food for thought
