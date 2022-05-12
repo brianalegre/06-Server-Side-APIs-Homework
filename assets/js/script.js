@@ -127,10 +127,10 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var weatherScore = data.current.weather[0].icon;
         var iconScore = `http://openweathermap.org/img/wn/${weatherScore}@2x.png`
         // Wind Speed
-        var windScore = data.current.wind_speed;
+        var windScore = Math.round(data.current.wind_speed * 10) / 10;
             console.log('windscore', windScore)
         // UV Index
-        var uvScore = data.current.uvi;
+        var uvScore = Math.round(data.current.uvi * 10) / 10;
             console.log('uvi', uvScore)
 
         displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, iconScore)

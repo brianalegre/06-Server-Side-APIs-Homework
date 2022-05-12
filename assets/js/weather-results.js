@@ -2,6 +2,12 @@
 var apiKey =  "b285d18d11dcc358521846452d848e59";
 var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
 var geoCall = `https://api.openweathermap.org/geo/1.0/direct`
+var part; 
+var lon;
+var lat;
+var stateCode;
+var countryCode;
+var limit;
 
 
 // HTML Targeting Variables
@@ -13,7 +19,9 @@ var humid = document.getElementById('humid')
 var wind = document.getElementById('windSpeed')
 var uvIndex = document.getElementById('uvIndex')
 var description = document.getElementById('description')
-var search = document.getElementById('searchButton')
+// var search = document.getElementById('searchButton')
+var searchKey = document.getElementById('searchInput')
+
 
 
 
@@ -107,10 +115,10 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         var iconScore = `http://openweathermap.org/img/wn/${weatherScore}@2x.png`
             // console.log('Weather Description', descripScore);
         // Wind Speed
-        var windScore = data.current.wind_speed;
+        var windScore = Math.round(data.current.wind_speed * 10) / 10;
             // console.log('windscore', windScore)
         // UV Index
-        var uvScore = data.current.uvi;
+        var uvScore = Math.round(data.current.uvi * 10) / 10;
             // console.log('uvi', uvScore)
 
         displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, iconScore)
@@ -138,10 +146,10 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
                 // Convert Temp from K to F
                 var fiveImperialScore = ((fiveTempScore-273.15)*1.8)+32
             // Humid
-            var fiveHumidScore = data.daily[i].humidity;
+            var fiveHumidScore = Math.round(data.daily[i].humidity * 10) / 10;
                 // console.log('5humidScore', fiveHumidScore);
             // Wind
-            var fiveWindScore = data.daily[i].wind_speed;
+            var fiveWindScore = Math.round(data.daily[i].wind_speed * 10) / 10;
                 // console.log('5windScore', fiveWindScore);
 
             displayFiveResults(fiveDateScore, fiveIconScore, fiveImperialScore, fiveHumidScore, fiveWindScore)
@@ -187,14 +195,95 @@ function displayFiveResults(fiveDateScore, fiveIconScore, fiveImperialScore, fiv
     $(".fiveDay").append(
         $(`
         <div class="eachDay">
-            <p> <b>Date: ${fiveDateScore}</b></p>
+            <p> <b>${fiveDateScore}</b></p>
             <img src="${fiveIconScore}" atl="Weather Icon">
-            <p>Temperature: ${Math.ceil(fiveImperialScore)} °F</p>
-            <p>Humidity: ${fiveHumidScore}</p>
-            <p>Wind Speed: ${fiveWindScore}</p>
+            <p>TEMP: ${Math.ceil(fiveImperialScore)} °F</p>
+            <p>HUM: ${fiveHumidScore}</p>
+            <p>WS: ${fiveWindScore}</p>
         </div>
         `)
 
     );
 }
 
+// Function for searching city
+function searchPlace(city) {
+    console.log('searchPlace Function called')
+    // Store Input Value to localStorage
+    // Check if keyValue Pair is empty
+    if (localStorage.getItem('cityName') === null) {
+        localStorage.setItem('cityName', '[]')
+    }
+
+    // Get Previous Data on localStorage
+    var old_data = JSON.parse(localStorage.getItem('cityName'))
+    
+    // Check for duplicate value
+    if (old_data.indexOf(city) === -1) {
+        old_data.push(city)
+
+        // Save old and new data
+        localStorage.setItem('cityName', JSON.stringify(old_data))
+    }
+
+    // Check for an input
+    if (!city) {
+        console.log("searchInputVal", city)
+        return;
+    }
+
+    // Display Search Results on Main
+    // getLatLon(searchInputVal)
+
+    var queryString = './weather-results.html?q=' + city;
+
+    // Go to next page
+    location.assign(queryString)
+}
+
+// Listen for Click on Search
+// searchButton.addEventListener('click', searchPlace)
+
+// Listen for Enter Key to searchPlace
+searchKey.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        console.log("Enter was pressed")
+        event.preventDefault();
+        var searchInputVal = document.getElementById('searchInput').value.trim();
+        searchPlace(searchInputVal);
+    }
+})
+
+function displayHistory() {
+    // var old_data = JSON.parse(localStorage.getItem('cityName'))
+
+    var history = JSON.parse(localStorage.getItem('cityName'))
+    // console.log('history', history)
+
+    // Display on Page
+    // JQuery Dynamic HTML Creation
+    if (history) {
+        for (var i = 0; i < history.length; i++) {
+            $(".history").append(
+                $(/*html*/`
+                    <button class="historybtn" data-id="${history[i]}">${history[i]} </button> <br>
+                `)
+            )
+        }
+    } else {
+        console.log('No History')
+    }
+}
+
+displayHistory()
+
+// Listen for click on History Items
+historyEl = document.getElementsByClassName("historybtn")
+for (let h = 0; h < historyEl.length; h++) {
+    historyEl[h].addEventListener('click', function (event) {
+        event.preventDefault();
+        clickedValue = event.target.getAttribute("data-id")
+        console.log('i was clicked', clickedValue)
+        searchPlace(clickedValue)
+    })
+}
