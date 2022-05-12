@@ -98,4 +98,14 @@ body {
 
 }
 
+.greenText {
+    color: #00FF00;
+}
 
+.orangeText {
+    color: #FFA500;
+}
+
+.redText {
+    color: #FF0000;
+}

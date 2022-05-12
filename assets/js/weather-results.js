@@ -171,6 +171,10 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
 
     // Display UV Score
     uvIndex.textContent = uvScore;
+    var uvColor = 'greenText';
+    if (uvScore > 2 && uvScore < 7 ) uvColor = 'orangeText';
+    if (uvScore >= 7) uvColor = 'redText';
+    uvIndex.setAttribute('class', uvColor)
 
     // Display Description:
     // description.textContent = descripScore;
