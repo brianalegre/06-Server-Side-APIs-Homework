@@ -14,18 +14,23 @@
     <title>Weather | Search Results</title>
 </head>
 <body>
-    <main>
-        <div>
-            <h1> <span id="citySearched"></span> </h1>
+    <section class="leftSide">
+        <h1 class="cityName"> <span id="citySearched"></span> </h1>
+
+        <div class="today">
+            <pc class="current"> Current </p>    
+        </div>
+
+        <div class="info">
             <p> <span id="today"></span></p>
-            <!-- <p> Weather description: <span id="description"></span></p> -->
+            <!-- <p> <span id="description"></span></p> -->
             <img id="weatherIcon" src="" alt="Weather Icon">
             <p> TEMP: <span id="temp"></span></p>
             <p> HUM: <span id="humid"></span></p>
             <p> WS: <span id="windSpeed"></span></p>
             <p> UV: <span id="uvIndex"></span></p>
         </div>
-    </main>
+    </section>
     <section class="sidebar">
         <form action="#">
             <input id="searchInput" type="text" placeholder="Enter a City Name">
@@ -38,9 +43,10 @@
 
     </section>
     <!-- <h2>Five Day Forecast: </h2> -->
-    <div class="fiveDay">
-        
-    </div>
+    <section class="fiveDay">
+        <pc class="forecast"> 5-Day Forecast </p>    
+
+    </section>
 
 </body>
 </html>
