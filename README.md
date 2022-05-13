@@ -1,6 +1,7 @@
 # 06-Server-Side-APIs-HomeworkL: Weather Dashboard
 
-Create a weather dashboard
+Create a weather dashboard using one server side API. 
+Dashboard will allow the user to search a city, and have it's weather displayed.
 
 # Site Preview
 <p align="center">
@@ -8,8 +9,8 @@ Create a weather dashboard
 </p>
 
 # Github Links
-- Repository: 
-- Deployed: 
+- Repository: https://github.com/brianalegre/06-Server-Side-APIs-Homework
+- Deployed: https://brianalegre.github.io/06-Server-Side-APIs-Homework/
 
 # Criteria 
 - Use an API to get the weather
@@ -42,10 +43,6 @@ Create a weather dashboard
 
 - Able to click History
  - Display Current, and future conditions
-
-
-
-
 
 # Notes and Articles
 Open Weather API
