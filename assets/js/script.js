@@ -1,22 +1,13 @@
 // Variables
 var apiKey =  "b285d18d11dcc358521846452d848e59";
-// Lat and Lon of Orange County, CA
 var lat;
-// = 33.7175;
 var lon; 
-// = -117.8311;
 var part; 
 var apiCall = `https://api.openweathermap.org/data/2.5/onecall`
-// `?lat=${lat}&lon=${lon}&exclude=${part}&appid=${apiKey}`
-
-
-// Geo Variables
-// var cityName = "los angeles"
 var stateCode;
 var countryCode;
 var limit;
 var geoCall = `https://api.openweathermap.org/geo/1.0/direct`
-// ?q=${cityName},${stateCode},${countryCode}&limit=${limit}&appid=${apiKey}
 
 
 // HTML Targeting Variables
@@ -30,8 +21,6 @@ var uvIndex = document.getElementById('uvIndex')
 var description = document.getElementById('description')
 // var search = document.getElementById('searchButton')
 var searchKey = document.getElementById('searchInput')
-
-
 
 
 // Objects to target 
@@ -55,12 +44,9 @@ function getLatLon (cityName) {
     return response.json();
     })
     .then (function (data) {
-        console.log(data);
         // Get and Set - Lat Lon
         lat =  data[0].lat
-            console.log(lat)
         lon = data[0].lon
-            console.log(lon)
         
         // Call Function with Lat and Lon
         getWeather(lat, lon)
@@ -78,11 +64,9 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
     return response.json();
 })
 .then (function (data) {
-    console.log(data);
     // Date
     var dateUTCScore = data.current.dt;
     var timeZoneOffsetScore = data.timezone_offset;
-    console.log('timeZoneOffsetScore', timeZoneOffsetScore);
 
     // From Chad
     // var hourOffset = timeZoneOffsetScore/3600;
@@ -91,56 +75,33 @@ fetch(apiCall + `?lat=` + lats + `&lon=` + lons + `&appid=${apiKey}`)
         // convert UNIX, UTC to a Date
         var dateUTCScoreMili = dateUTCScore * 1000
         var timeZoneScoreMili = timeZoneOffsetScore * 1000
-
         var dateScore2 = dateUTCScoreMili + timeZoneScoreMili
-
         var dateObject = new Date(dateUTCScoreMili)
         var dateObject2 = new Date(dateScore2)
-        
         var dateScore = dateObject.toLocaleDateString();  
-
-
         var dateScore2 = dateObject2.toLocaleDateString("en-US", {timeZoneName: "short"})
-
-        // Display the Date, no Timezone Offset
-        console.log('dateScore', dateScore)
-        // Display the Date, WITH Timezone Offset
-        console.log('dateScore2', dateScore2)
-        console.log('timeZoneOffset', timeZoneOffsetScore)
-
-            // ISSUE
-            // Tokyo - Displays the correct date with dateUTCScore + timeZoneOffsetScore
-            // New York - Does NOT display the correct date with dateUTCScore + timeZoneOffsetScore
-            
-
             
         // Humid
         var humidScore = data.current.humidity
-            console.log("Humid", humidScore)
         // Temp
         var tempScore = data.current.temp
-            console.log('tempScore', tempScore)
-                // Convert Temp from K to F
-                imperialScore = ((tempScore-273.15)*1.8)+32
-                    console.log('imperialScore:', imperialScore)
+            // Convert Temp from K to F
+            imperialScore = ((tempScore-273.15)*1.8)+32
         // Weather Icon
         var weatherScore = data.current.weather[0].icon;
         var iconScore = `http://openweathermap.org/img/wn/${weatherScore}@2x.png`
         // Wind Speed
         var windScore = Math.round(data.current.wind_speed * 10) / 10;
-            console.log('windscore', windScore)
         // UV Index
         var uvScore = Math.round(data.current.uvi * 10) / 10;
-            console.log('uvi', uvScore)
 
+        // Call Function
         displayResults(dateScore, imperialScore, humidScore, windScore, uvScore, iconScore)
-
-
 
     })
 }
 
-// call function
+// Call function
 getLatLon("tokyo");
 
 // Display API Results
@@ -174,7 +135,12 @@ function displayResults (dateScore, imperialScore, humidScore, windScore, uvScor
 
 // Function for searching city
 function searchPlace(city) {
-    console.log('searchPlace Function called')
+    // Check for an input
+    if (!city) {
+        return;
+    }
+
+
     // Store Input Value to localStorage
     // Check if keyValue Pair is empty
     if (localStorage.getItem('cityName') === null) {
@@ -192,12 +158,6 @@ function searchPlace(city) {
         localStorage.setItem('cityName', JSON.stringify(old_data))
     }
 
-    // Check for an input
-    if (!city) {
-        console.log("searchInputVal", city)
-        return;
-    }
-
     // Display Search Results on Main
     // getLatLon(searchInputVal)
 
@@ -213,7 +173,6 @@ function searchPlace(city) {
 // Listen for Enter Key to searchPlace
 searchKey.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
-        console.log("Enter was pressed")
         event.preventDefault();
         var searchInputVal = document.getElementById('searchInput').value.trim();
         searchPlace(searchInputVal);
@@ -249,17 +208,6 @@ for (let h = 0; h < historyEl.length; h++) {
     historyEl[h].addEventListener('click', function (event) {
         event.preventDefault();
         clickedValue = event.target.getAttribute("data-id")
-        console.log('i was clicked', clickedValue)
         searchPlace(clickedValue)
     })
 }
-
-
-// Food for thought
-/* 
-
-Use Geo to get the LAT and LON?
-
-*/
-
-// fetchButton.addEventListener('click', getApi);
