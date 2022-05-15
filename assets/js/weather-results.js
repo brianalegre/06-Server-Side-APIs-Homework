@@ -30,36 +30,6 @@ var queryParam = cityParam.split('=').pop();
 // Display Function on Load
 getLatLon(decodeURI(queryParam));
 
-// // Function to get cityName's Lat and Lon
-// function getLatLon(cityName) {
-// 	// GEO Call, Fetch
-// 	fetch(geoCall + `?q=${encodeURI(cityName)}&appid=${apiKey}`)
-// 		.then(function (response) {
-// 			if (response.status !== 200) {
-// 				console.log('City Not Found');
-// 				location.assign('./notFound.html');
-// 				return;
-// 			} else {
-// 				return response.json();
-// 			}
-// 		})
-// 		.then(function (data) {
-// 			// console.log(data);
-// 			// Get and Set - Lat Lon
-// 			lat = data[0].lat;
-// 			lon = data[0].lon;
-
-// 			// Call Function with Lat and Lon
-// 			getWeather(lat, lon);
-
-// 			// Display City on Page
-// 			citySearched.textContent = cityName.toUpperCase();
-// 		});
-//         .catch (function (error) {
-//             alert('Unable to connect to GitHub');
-//           });
-// }
-
 function getLatLon(cityName) {
 	// GEO Call, Fetch
 	fetch(geoCall + `?q=${encodeURI(cityName)}&appid=${apiKey}`)
