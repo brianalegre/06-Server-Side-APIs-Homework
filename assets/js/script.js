@@ -39,23 +39,37 @@ function getLatLon(cityName) {
 		.then(function (response) {
 			if (response.ok) {
 				response.json().then(function (data) {
-					// console.log(data)
-					// Get and Set - Lat Lon
-					lat = data[0].lat;
-					lon = data[0].lon;
+					console.log(data);
+					if (data == '') {
+						// Remove from history
+						var old_data = JSON.parse(
+							localStorage.getItem('cityName')
+						);
+						old_data.pop(cityName);
+						// Save old and new data
+						localStorage.setItem(
+							'cityName',
+							JSON.stringify(old_data)
+						);
 
-					// Call Function with Lat and Lon
-					getWeather(lat, lon);
+						location.assign('./notFound.html');
+					} else {
+						// Get and Set - Lat Lon
+						lat = data[0].lat;
+						lon = data[0].lon;
 
-					// Display City on Page
-					citySearched.textContent = cityName.toUpperCase();
+						// Call Function with Lat and Lon
+						getWeather(lat, lon);
+
+						// Display City on Page
+						citySearched.textContent = cityName.toUpperCase();
+					}
 				});
 			} else {
 				location.assign('./notFound.html');
 			}
 		})
 		.catch(function (error) {
-			alert('Something Wrong: ' + response.statusText);
 			location.assign('./notFound.html');
 		});
 }
