@@ -1,0 +1,161 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: '8BIT WONDER', sans-serif;
+}
+
+body {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	color: white;
+	/* justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+	/* background-image: url("../../assets/images/train.gif"); */
+	background: url('../../assets/images/ghost.gif') no-repeat center center
+		fixed;
+	background-size: cover;
+}
+/* 
+#citySearched {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 20px;
+    margin-left: 20px;
+    color: white;
+
+}
+
+
+.card {
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    padding: 10px;
+    line-height: 50px;
+
+} */
+
+.sidebar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 20px;
+}
+
+.leftSide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-left: 20px;
+}
+
+#searchInput {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	text-align: center;
+	height: 40px;
+}
+
+.cityName {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	text-align: center;
+	height: 40px;
+	font-size: 2em;
+}
+
+.history {
+	line-height: 50px;
+	text-align: end;
+	/* height: 30px;
+    width: 100px; */
+}
+
+.info {
+	/* line-height: 50px; */
+	text-align: left;
+	margin-top: 20px;
+	font-size: 1em;
+	line-height: 35px;
+}
+
+.historyList,
+.current {
+	font-size: 0.75em;
+	/* text-decoration: underline;
+    text-decoration-thickness: 0.3em; */
+	border-bottom: 3px solid #fff;
+	padding-bottom: 7.5px;
+}
+
+.current {
+	font-size: 0.75em;
+	/* margin-top: 0px; */
+	border-bottom: 3px solid #fff;
+	padding-bottom: 7.5px;
+}
+
+.today {
+	margin-top: 35px;
+}
+
+.historybtn {
+	font-size: 15px;
+	border-radius: 10px;
+	padding: 5px;
+	height: 35px;
+	width: 200px;
+	cursor: pointer;
+}
+
+.fiveDay {
+	display: flex;
+	margin: 0 auto;
+	align-items: flex-end;
+	margin-bottom: 200px;
+	font-size: 1em;
+	line-height: 35px;
+}
+
+.eachDay {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.forecast {
+	/* position: relative; */
+	/* top: 45%; */
+	border-bottom: 3px solid #fff;
+	font-size: 0.75em;
+	margin: 0 auto;
+	padding-bottom: 7.5px;
+	margin-bottom: 250px;
+}
+
+.greenText {
+	color: #00ff00;
+}
+
+.orangeText {
+	color: #ffa500;
+}
+
+.redText {
+	color: #ff0000;
+}
+
+.notFound {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	text-align: center;
+	height: 40px;
+	font-size: 2em;
+}
