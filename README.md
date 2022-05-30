@@ -1,4 +1,4 @@
-# 06-Server-Side-APIs-HomeworkL: Weather Dashboard
+# 06-Server-Side-APIs-Homework: Weather Dashboard
 
 Create a weather dashboard using one server side API. 
 Dashboard will allow the user to search a city, and have it's weather displayed.
